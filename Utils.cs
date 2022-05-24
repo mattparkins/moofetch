@@ -2,7 +2,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace moom {
+namespace moofetch {
 
     public static class Utils {
 

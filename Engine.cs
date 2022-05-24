@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 
-namespace moom {
+namespace moofetch {
     public static class Engine {
         public static async Task Login(Config config) {
 

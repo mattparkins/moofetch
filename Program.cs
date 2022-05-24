@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace moom {
+namespace moofetch {
+
     static class Program {
 
         enum Intent {
@@ -14,11 +15,11 @@ namespace moom {
         static readonly int _versionMajor = 0, _versionMinor = 1;
 
         static void _displayVersion() {
-            Console.WriteLine($"moom v{_versionMajor}.{_versionMinor}");
+            Console.WriteLine($"moofetch v{_versionMajor}.{_versionMinor}");
         }
 
         static void _displayHelp() {
-            Console.WriteLine("usage: moom <option>");
+            Console.WriteLine("usage: moofetch <option>");
             Console.WriteLine(" --showHelp                          display this help");
             Console.WriteLine(" --showVersion                       display the version number");
             Console.WriteLine(" --config <filename.json>            load configuration and execute");

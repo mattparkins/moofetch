@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace moom {
+namespace moofetch {
 
     public class Config {
 

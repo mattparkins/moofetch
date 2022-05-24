@@ -7,3 +7,5 @@ Has basic data checks on downloads;
 Can also use downloaded data to direct later downloads*.
 
 (*for instance, downloading leaderboard json, extracting the top 50 entries, and then extracting an id from each entry to then use in later filenames to be downloaded)
+
+Requires .net 6 for the JsonConverter enum support

@@ -100,7 +100,7 @@ namespace moofetch {
         static async Task _execute(string configFilePath) {
             Config config = _loadConfig(configFilePath);
 
-            await Engine.Login(config);
+            //await Engine.Login(config);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace moofetch {
@@ -10,7 +11,10 @@ namespace moofetch {
             PropertyNameCaseInsensitive = true,
             WriteIndented = true,
             ReadCommentHandling = JsonCommentHandling.Skip,
-            AllowTrailingCommas = true
+            AllowTrailingCommas = true,
+            Converters = {
+                new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) 
+            }
         };
 
         static Regex _regexAlphaNumeric = new Regex("[^a-zA-Z0-9]");
@@ -21,7 +25,7 @@ namespace moofetch {
         }
 
         public static void SerializeToFile<T>(string filePath, T t) {
-            string jsonString = JsonSerializer.Serialize(t);
+            string jsonString = JsonSerializer.Serialize(t, JSONConfig);
             File.WriteAllText(filePath, jsonString);
         }
 

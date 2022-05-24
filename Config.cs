@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 
 namespace moofetch {
+
     public enum FetchType {
         Regular,
         ExtractAndLoop,
     }
 
     public class FetchItem {
-        public string uri                   { get; set; }
+        public string uri                   { get; set; } = "";
         public FetchType fetchType          { get; set; }
         public string extractRegex          { get; set; }
         public List<FetchItem> loopedItems  { get; set; }
@@ -24,7 +25,7 @@ namespace moofetch {
             config.skipFetch = false;
             config.dataPath = "/data";
             config.items = new List<FetchItem>();
-            config.items.Add(new FetchItem {"http://bbc.co.uk"});
+            config.items.Add(new FetchItem { uri = "http://bbc.co.uk" });
 
             return config;
         }

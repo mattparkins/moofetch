@@ -4,7 +4,8 @@ namespace moofetch {
 
     public enum FetchType {
         Regular,
-        ExtractAndLoop,
+        LoopCollection,
+        LoopPage
     }
 
     public class FetchItem {

@@ -1,0 +1,54 @@
+using System.IO;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+
+namespace moom {
+
+    public static class Utils {
+
+        public static readonly JsonSerializerOptions JSONConfig = new JsonSerializerOptions { 
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            AllowTrailingCommas = true
+        };
+
+        static Regex _regexAlphaNumeric = new Regex("[^a-zA-Z0-9]");
+
+        public static T DeserializeFromFile<T>(string filePath) {
+            string jsonString = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<T>(jsonString, JSONConfig);
+        }
+
+        public static void SerializeToFile<T>(string filePath, T t) {
+            string jsonString = JsonSerializer.Serialize(t);
+            File.WriteAllText(filePath, jsonString);
+        }
+
+        public static string SanitizeFilename(string name) {
+            return _regexAlphaNumeric.Replace(name, "_");
+        }
+
+        public static int DaysInSeconds(int days) {
+            return days * 24 * 60 * 60;
+        }
+
+        public static int HoursInSeconds(int hours) {
+            return hours * 60 * 60;
+        }
+
+        public static bool PathIsOutsideFolderStructure(string filePath) {
+            var fullRoot = Path.GetFullPath(".");
+            var fullPathToVerify = Path.GetFullPath(filePath);
+            return !fullPathToVerify.StartsWith(fullRoot);
+        }
+
+        public static double SafeDivide(double top, double dividedBy) {
+            if (dividedBy == 0.0) {
+                return 0;
+            } else {
+                return (double) top / dividedBy;
+            }
+        }
+    }
+}

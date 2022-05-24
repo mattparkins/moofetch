@@ -1,0 +1,18 @@
+{
+  "dataPath": "/data",
+  "skipFetch": false,
+  "baseuri": "https://fantasy.premierleague.com/api/",
+  "items": [
+    { "uri": "bootstrap-static/" },
+
+    {
+      "uri": "http://bbc.co.uk",
+      "fetchType": "regular",
+      "pageStart": 0,
+      "pageIncrement": 0,
+      "pageCount": 1,
+      "extractPath": "",
+      "loopedItems": null
+    }
+  ]
+}

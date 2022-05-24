@@ -5,7 +5,6 @@ namespace moofetch {
     public enum FetchType {
         Regular,
         ExtractAndLoop,
-        PagedExtractAndLoop,
     }
 
     public class FetchItem {
@@ -21,6 +20,7 @@ namespace moofetch {
     public class Config {
 
         public string dataPath              { get; set; }   // relative location for data cache
+        public string baseuri               { get; set; }   // the base URI prepended as-is to each uri
         public bool skipFetch               { get; set; }   // force the skipping of data fetching - may crash if data isn't in the cache
         public List<FetchItem> items        { get; set; }
         
@@ -28,9 +28,10 @@ namespace moofetch {
             Config config = new Config();
             config.skipFetch = false;
             config.dataPath = "/data";
+            config.baseuri = "http://bbc.co.uk/";
 
             config.items = new List<FetchItem>();
-            config.items.Add(new FetchItem { uri = "http://bbc.co.uk" });
+            config.items.Add(new FetchItem { uri = "/myfile.json" });
 
             return config;
         }

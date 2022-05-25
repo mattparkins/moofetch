@@ -87,10 +87,16 @@ namespace moofetch {
                 config = null;
             } 
             
-            if (config == null || !config.IsValid()) {
-                Console.WriteLine("invalid or failed to deserialise.");
+            if (config == null) {
+                
+                Console.WriteLine("invalid, failed to deserialise");
                 Environment.Exit(-1);
-            } 
+
+            } else if (!config.IsValid()) {
+                
+                Console.WriteLine("basic errors exist in configuration.");
+                Environment.Exit(-1);
+            }
 
             Console.WriteLine("Ok!");
             return config;

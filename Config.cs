@@ -8,14 +8,20 @@ namespace moofetch {
         LoopPage
     }
 
+    public class ExtractCollection {
+        public string name  { get; set; }
+        public string path  { get; set; }
+    }
+
     public class FetchItem {
-        public string uri                   { get; set; } = "";
-        public FetchType fetchType          { get; set; } = FetchType.Regular;
-        public int pageStart                { get; set; } = 0;
-        public int pageIncrement            { get; set; } = 0;
-        public int pageCount                { get; set; } = 1;
-        public string extractPath           { get; set; } = "";
-        public List<FetchItem> loopedItems  { get; set; }
+        public string uri                                   { get; set; } = "";
+        public string output                                { get; set; }
+        public FetchType fetchType                          { get; set; } = FetchType.Regular;
+        public int pageStart                                { get; set; } = 0;
+        public int pageIncrement                            { get; set; } = 1;
+        public int pageCount                                { get; set; } = 1;
+        public List<FetchItem> loopedItems                  { get; set; }
+        public List<ExtractCollection> extractCollection    { get; set; }
     }
 
     public class Config {

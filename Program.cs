@@ -12,11 +12,14 @@ namespace moofetch {
             GenerateConfig
         }
 
+
         static readonly int _versionMajor = 0, _versionMinor = 1;
+
 
         static void _displayVersion() {
             Console.WriteLine($"moofetch v{_versionMajor}.{_versionMinor}");
         }
+
 
         static void _displayHelp() {
             Console.WriteLine("usage: moofetch <option>");
@@ -104,11 +107,9 @@ namespace moofetch {
 
 
         static async Task _execute(string configFilePath) {
+
             Config config = _loadConfig(configFilePath);
-
-            Console.WriteLine("Executing config");
-
-            //await Engine.Login(config);
+            await Engine.Execute(config);
         }
     }
 }

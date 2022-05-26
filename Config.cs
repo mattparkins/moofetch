@@ -23,6 +23,7 @@ namespace moofetch {
         public string uri                                   { get; set; } = "";
         public string output                                { get; set; }
         public FetchType fetchType                          { get; set; } = FetchType.Regular;
+        public int sanityCheckSize                          { get; set; }
         public int pageStart                                { get; set; } = 0;
         public int pageIncrement                            { get; set; } = 1;
         public int pageCount                                { get; set; } = 1;
@@ -45,6 +46,7 @@ namespace moofetch {
         }
     }
 
+
     public class Config {
 
         public string dataPath              { get; set; }   // relative location for data cache
@@ -61,6 +63,7 @@ namespace moofetch {
 
             return config;
         }
+
 
         // Basic validation check to make sure the config isn't entirely nuts
         public bool IsValid() {

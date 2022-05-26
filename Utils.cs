@@ -2,6 +2,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace moofetch {
 
@@ -54,5 +55,14 @@ namespace moofetch {
                 return (double) top / dividedBy;
             }
         }
-    }
+
+
+        // Helper function to execute non-blocking async tasks where we don't care about the return
+        // Usage: myAsyncFunction().RunConcurrent();
+        public static void ExecuteConcurrently(this Task task) { 
+            if (task.Status == TaskStatus.Created) {
+                task.Start(); 
+            }
+        } 
+}
 }

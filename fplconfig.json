@@ -3,7 +3,9 @@
   "skipFetch": false,
   "callRatePerMin": 60,
   "items": [
-    { "uri": "https://fantasy.premierleague.com/api/bootstrap-static/",
+    { 
+      "uri": "https://fantasy.premierleague.com/api/bootstrap-static/",
+      "sanityCheckSize": 100000,
       "extractCollection": [
         { "name": "gw",   "path": "events[*].id"    },
         { "name": "elid", "path": "elements[*].id"  }
@@ -11,16 +13,19 @@
     },
     {
       "uri": "https://fantasy.premierleague.com/api/fixtures/?event={gw}",
-      "fetchType": "loopCollection"
+      "fetchType": "loopCollection",
+      "sanityCheckSize": 100
     },
     {
       "uri": "https://fantasy.premierleague.com/api/element-summary/{elid}/",
       "fetchType": "loopCollection",
+      "sanityCheckSize": 100,
       "output": "player_{elid}.json"
     },
     {
       "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
       "fetchType": "loopPage",
+      "sanityCheckSize": 100,
       "output": "overall_standings_page_{page}.json",
       "pageStart": 1,
       "pageIncrement": 1,
@@ -32,16 +37,19 @@
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/history/",
       "fetchType": "loopCollection",
+      "sanityCheckSize": 100,
       "output": "rank_{entryid.index:0000000}_history.json"
     },
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/transfers/",
       "fetchType": "loopCollection",
+      "sanityCheckSize": 100,
       "output": "rank_{entryid.index:0000000}_transfers.json"
     },
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/event/{gw}/picks/",
       "fetchType": "loopCollection",
+      "sanityCheckSize": 100,
       "output": "rank_{entryid.index:0000000}_picks_{gw}.json"
     }
   ]

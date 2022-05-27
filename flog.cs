@@ -11,6 +11,7 @@ namespace moofetch {
             
             string sout = _prepareToLog(output, showOnConsole);
             await _fout.WriteLineAsync(sout);
+            await _fout.FlushAsync();
         }
 
 
@@ -18,6 +19,7 @@ namespace moofetch {
 
             string sout = _prepareToLog(output, showOnConsole);
             _fout.WriteLine(sout);
+            _fout.Flush();
         }
 
 

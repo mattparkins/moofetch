@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Collections.Generic;
 
 namespace moofetch {
@@ -42,15 +41,17 @@ namespace moofetch {
 
     public class Config {
 
-        public string dataPath              { get; set; }   // relative location for data cache
-        public bool skipFetch               { get; set; }   // force the skipping of data fetching - may crash if data isn't in the cache
+        public string dataPath              { get; set; } = ""; // relative location for data cache
+        public bool skipFetch               { get; set; }       // force the skipping of data fetching - may crash if data isn't in the cache
+        public int callRatePerMin           { get; set; } = 60; // number of API calls per minute, or zero for unlimited
         public List<FetchItem> items        { get; set; }
         
         public static Config CreateDefault() {
             Config config = new Config();
             config.skipFetch = false;
             config.dataPath = "/data";
-
+            config.callRatePerMin = 60;
+            
             config.items = new List<FetchItem>();
             config.items.Add(new FetchItem { uri = "/myfile.json" });
 

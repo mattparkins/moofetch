@@ -14,6 +14,7 @@ namespace moofetch {
         static string _taskString;
         static Regex _regexExtract = new Regex("{(.*?)}");
         static List<string> _reservedIdentifiers = new List<string> {"page", "TaskOutputIndex"};
+        static DateTime _nextFetchStamp = DateTime.MinValue;
 
         public static async Task Execute(Config config) {
 
@@ -53,7 +54,7 @@ namespace moofetch {
                     string sid = match.Groups[1].Value;
                     
                     if (!_coll.ContainsKey(sid) && !_reservedIdentifiers.Contains(sid)) {
-                        Flog.Log($"Met unexpected identifier ({sid}) in string ({uri}).  Identifiers should either be in a collection or in the reserved word list.  Aborting");
+                        Flog.Log($"Met unexpected identifier ({sid}) in string ({uri}).  Identifiers should either be in a collection or in the reserved word list.  Aborting", true);
                         Environment.Exit(-1);
                     }
 
@@ -66,15 +67,26 @@ namespace moofetch {
 
 
         private static async Task _executeTask(int itemIndex) {
+
             FetchItem item = _config.items[itemIndex];
             _taskString = $"Task {itemIndex +1}/{_config.items.Count}> ";
 
             List<string> ci = _getCollectionIdentifiers(item.uri);
             List<string> oi = _getCollectionIdentifiers(item.output);
+            int page = item.pageStart;
+            int pagesRemaining = item.pageCount;
+            bool uriHasPaging = ci.Contains("page");
 
             // We're going to iterate through every combination of extracted data injected into the uri, track each in ciCounter
+            List<string> ciUser = new List<string>();
             Dictionary<string, int> ciCounter = new Dictionary<string, int>();
-            ci.ForEach(identifier => ciCounter.Add(identifier, 0));
+            
+            ci.ForEach(identifier => { 
+                if (!_reservedIdentifiers.Contains(identifier)) {
+                    ciUser.Add(identifier);
+                    ciCounter.Add(identifier, 0);
+                }
+            });
 
             bool taskComplete = false;
 
@@ -84,18 +96,13 @@ namespace moofetch {
 
                 string uri = item.uri;
                 foreach (var (identifier, identifierCounter) in ciCounter) {
-                    
-                    //Is the identifier user defined or from the reserved list?
-                    if (_coll.ContainsKey(identifier)) {
+                    uri = Regex.Replace(uri, $"{{{identifier}}}", _coll[identifier][identifierCounter], RegexOptions.IgnoreCase);
+                } 
 
-                        uri = Regex.Replace(uri, $"{{{identifier}}}", _coll[identifier][identifierCounter]);
-
-                    } else if (_reservedIdentifiers.Contains(identifier)) {
-
-                        // Todo: handle reserved identifiers, such as paging, or task output indicies
-
-                    }
+                if (uriHasPaging) {                        
+                    uri = Regex.Replace(uri, "{page}", page.ToString(), RegexOptions.IgnoreCase);
                 }
+
 
                 // inject values into the output if required
 
@@ -106,10 +113,15 @@ namespace moofetch {
                         if (_coll.ContainsKey(oid)) {
 
                             int identifierCounter = ciCounter[oid];
-                            outFilename = Regex.Replace(outFilename, $"{{{oid}}}", _coll[oid][identifierCounter]);
+                            outFilename = Regex.Replace(outFilename, $"{{{oid}}}", _coll[oid][identifierCounter], RegexOptions.IgnoreCase);
                         
                         } else {
+
                             // Todo: handle reserved identifiers, such as paging, or task output indicies
+
+                            if (String.Compare(oid, "page", true) == 0) {
+                                outFilename = Regex.Replace(outFilename, "{page}", page.ToString(), RegexOptions.IgnoreCase);
+                            }
                         }
                     });
                 }
@@ -141,17 +153,17 @@ namespace moofetch {
                 }
 
                 // Do we have collection identifier counters to increment?
-                if (ci.Count > 0) {
+                if (ciCounter.Count > 0) {
                     
-                    int ciIndex = ci.Count;
-                    while (--ciIndex >= 0) {
+                    int cicIndex = ciCounter.Count;
+                    while (--cicIndex >= 0) {
 
-                        string identifier = ci[ciIndex];
+                        string identifier = ciUser[cicIndex];
                         ciCounter[identifier]++;
                         if (ciCounter[identifier] >= _coll[identifier].Count) {
                             ciCounter[identifier] = 0;
 
-                            if (ciIndex == 0) {
+                            if (cicIndex == 0) {
                                 taskComplete = true;                                
                             }
                         } else {
@@ -161,8 +173,18 @@ namespace moofetch {
 
                 } else {
 
-                    // Just a one shot download
+                    // No collection identifiers to advance
                     taskComplete = true;
+                }
+
+                // The task has to be run for every page.  Usually pages and collection identifiers aren't mixed,
+                // but if they are then we should essentially complete the task for each page
+
+                if (taskComplete) {
+                    page += item.pageIncrement;
+                    pagesRemaining--;
+
+                    taskComplete = (pagesRemaining <= 0);
                 }
             }
 
@@ -196,12 +218,27 @@ namespace moofetch {
                     Console.WriteLine("Looks ok!");
                     return json;
                 } else {
-                    Console.Write("but file invalid, re-");
+                    Console.Write("but file invalid, ");
                 }
             }
 
             // Either the file doesn't exist, or exists but has expired or didn't deserialize correctly,
-            // download and save a fresh copy
+            // download and save a fresh copy.  First ensure that the timestamp has expired.
+
+            if (_config.callRatePerMin >= 1) {
+
+                DateTime now = DateTime.Now;
+                if (now < _nextFetchStamp) {
+                    TimeSpan delay = _nextFetchStamp - now;
+                    Console.Write($"awaiting callRate delay, ");
+                    
+                    await Task.Delay((int) delay.TotalMilliseconds);
+                }
+                
+                _nextFetchStamp = now.AddSeconds(60.0 / _config.callRatePerMin);
+            }
+            
+            // Download file
 
             Console.Write("downloading, ");
 
@@ -214,6 +251,7 @@ namespace moofetch {
             string body;
 
             try {
+
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 body = await response.Content.ReadAsStringAsync();

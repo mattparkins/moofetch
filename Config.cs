@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace moofetch {
 
-    public enum FetchType {
-        Regular,
-        LoopCollection,
-        LoopPage
-    }
-
     public class ExtractCollection {
         public string name  { get; set; }
         public string path  { get; set; }
@@ -22,7 +16,6 @@ namespace moofetch {
     public class FetchItem {
         public string uri                                   { get; set; } = "";
         public string output                                { get; set; }
-        public FetchType fetchType                          { get; set; } = FetchType.Regular;
         public int sanityCheckSize                          { get; set; }
         public int pageStart                                { get; set; } = 0;
         public int pageIncrement                            { get; set; } = 1;

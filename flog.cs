@@ -7,13 +7,33 @@ namespace moofetch {
 
         static StreamWriter _fout;
 
-        public static async void Log(string output) {
+        public static async void LogAsync(string output, bool showOnConsole = false) {
+            
+            string sout = _prepareToLog(output, showOnConsole);
+            await _fout.WriteLineAsync(sout);
+        }
+
+
+        public static void Log(string output, bool showOnConsole = false) {
+
+            string sout = _prepareToLog(output, showOnConsole);
+            _fout.WriteLine(sout);
+        }
+
+
+        private static string _prepareToLog(string output, bool showOnConsole) {
             if (_fout == null) {
                 _fout = new StreamWriter("error.log", append: true);
             }
 
             string dstring = DateTime.Now.ToString("yyyy-MMM-dd HH.mm.ss");
-            await _fout.WriteLineAsync($"{dstring} > {output}");
+            string sout = $"{dstring} > {output}";
+
+            if (showOnConsole) {
+                Console.WriteLine(sout);
+            }
+
+            return sout;
         }
     }
 }

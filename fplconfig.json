@@ -30,23 +30,23 @@
       "pageIncrement": 1,
       "PageCount": 2,
       "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].id" }
+        { "name": "entryid",  "path": "$.standings.results[*].entry" }
       ]
     },
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/history/",
       "sanityCheckSize": 100,
-      "output": "rank_{TaskOutputIndex:000000}_history.json"
+      "output": "entry_{entryid}_history.json"
     },
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/transfers/",
       "sanityCheckSize": 100,
-      "output": "rank_{TaskOutputIndex:000000}_transfers.json"
+      "output": "entry_{entryid}_transfers.json"
     },
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/event/{gw}/picks/",
       "sanityCheckSize": 100,
-      "output": "rank_{TaskOutputIndex:000000}_picks_{gw}.json"
+      "output": "entry_{entryid}_picks_{gw}.json"
     }
   ]
 }

@@ -40,7 +40,7 @@ namespace moofetch {
 
 
         // Find the collection identifiers in a given string (could be uri or ouput string)
-        // and return in a list after checking that the collection or reserved variable exists
+        // and return lowercase in a list after checking that the collection or reserved variable exists
 
         private static List<string> _getCollectionIdentifiers(string uri) {
 
@@ -58,7 +58,7 @@ namespace moofetch {
                         Environment.Exit(-1);
                     }
 
-                    ci.Add(sid);
+                    ci.Add(sid.ToLower());
                 }
             }
 
@@ -75,6 +75,9 @@ namespace moofetch {
             List<string> oi = _getCollectionIdentifiers(item.output);
             int page = item.pageStart;
             int pagesRemaining = item.pageCount;
+
+            // Reserved identifiers
+
             bool uriHasPaging = ci.Contains("page");
 
             // We're going to iterate through every combination of extracted data injected into the uri, track each in ciCounter
@@ -117,8 +120,6 @@ namespace moofetch {
                         
                         } else {
 
-                            // Todo: handle reserved identifiers, such as paging, or task output indicies
-
                             if (String.Compare(oid, "page", true) == 0) {
                                 outFilename = Regex.Replace(outFilename, "{page}", page.ToString(), RegexOptions.IgnoreCase);
                             }
@@ -128,7 +129,6 @@ namespace moofetch {
 
 
                 // fetch json
-
                 Console.Write(_taskString);
                 string json = await _fetch(uri, item.sanityCheckSize, outFilename);
 
@@ -193,6 +193,8 @@ namespace moofetch {
             if (item.extractCollection != null) {
                 item.extractCollection.ForEach(ec => {
                     Console.WriteLine($"{_taskString}Extracted {ec.name} using {ec.path}, {_coll[ec.name].Count} items extracted.");
+
+                    //_coll[ec.name].ForEach(value => Console.WriteLine($"{ec.name} {value}"));
                 });
             }
         }

@@ -146,8 +146,16 @@ namespace moofetch {
                         }
 
                         IEnumerable<JToken> tokens = o.SelectTokens(ec.path);
+
+                        int extractedCount = 0;
+
                         foreach (JToken token in tokens) {
                             _coll[ec.name].Add(token.ToString());
+                            extractedCount++;
+                        }
+
+                        if (ec.name == "entryid" && extractedCount != 50) {
+                            Console.WriteLine($"--- only {extractedCount} tokens in this file ---");
                         }
                     });   
                 }

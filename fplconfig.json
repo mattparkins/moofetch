@@ -1,7 +1,7 @@
 {
   "dataPath": "data/",
   "skipFetch": false,
-  "callRatePerMin": 150,
+  "callRatePerMin": 0,
   "items": [
     { 
       "uri": "https://fantasy.premierleague.com/api/bootstrap-static/",

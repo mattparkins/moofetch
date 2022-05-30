@@ -15,6 +15,7 @@ namespace moofetch {
         static Regex _regexExtract = new Regex("{(.*?)}");
         static List<string> _reservedIdentifiers = new List<string> {"page", "TaskOutputIndex"};
         static DateTime _nextFetchStamp = DateTime.MinValue;
+        static HttpClient _client = new HttpClient();
 
         public static async Task Execute(Config config) {
 
@@ -252,7 +253,6 @@ namespace moofetch {
 
             Console.Write("downloading, ");
 
-            HttpClient client = new HttpClient();
             HttpRequestMessage request = new HttpRequestMessage {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(uri)
@@ -262,7 +262,7 @@ namespace moofetch {
 
             try {
 
-                HttpResponseMessage response = await client.SendAsync(request);
+                HttpResponseMessage response = await _client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 body = await response.Content.ReadAsStringAsync();
 

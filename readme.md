@@ -90,6 +90,11 @@ Here's a walkthrough the example config which uses fantasy premier league (FPL) 
 **extractCollection**, array - each entry defines a collection to create or append to comprising of its name and a JSONPath.  The downloaded item is loaded and the JSONPath is used to extract data (which is stored as string) and stored in a collection for use in later downloads.  See NewtonSoft's Json.net JSONPath help for more help regarding JSONPath.
 
 ---
+### Errors
+
+The default use-case is unattended execution, so the program will largely try to plough on through errors where possible and log them to an error.log file in the root folder for the user to peruse at their leisure.
+
+---
 Future versions:
 - Add sanity deserialization for files ending .json
 - Add sanity data checks that include variable referencing (perhaps ensuring that a reference used in the uri is also found in a specified JSONPath)

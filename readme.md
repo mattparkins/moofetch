@@ -24,49 +24,49 @@ Here's a walkthrough the example config which uses fantasy premier league (FPL) 
     "callRatePerMin": 0,
     "items": [
         { 
-			"uri": "https://fantasy.premierleague.com/api/bootstrap-static/",
-			"sanityCheckSize": 100000,
-			"output": "bootstrap-static.json",
-			"extractCollection": [
-				{ "name": "gw",   "path": "$.events[*].id"    },
-				{ "name": "elid", "path": "$.elements[*].id"  }
-			]
+		"uri": "https://fantasy.premierleague.com/api/bootstrap-static/",
+		"sanityCheckSize": 100000,
+		"output": "bootstrap-static.json",
+		"extractCollection": [
+			{ "name": "gw",   "path": "$.events[*].id"    },
+			{ "name": "elid", "path": "$.elements[*].id"  }
+		]
         },
         {
-			"uri": "https://fantasy.premierleague.com/api/fixtures/?event={gw}",
-			"sanityCheckSize": 100,
-			"output": "fixtures_event_{gw}.json"
+		"uri": "https://fantasy.premierleague.com/api/fixtures/?event={gw}",
+		"sanityCheckSize": 100,
+		"output": "fixtures_event_{gw}.json"
         },
         {
-			"uri": "https://fantasy.premierleague.com/api/element-summary/{elid}/",
-			"sanityCheckSize": 100,
-			"output": "player_{elid}.json"
+		"uri": "https://fantasy.premierleague.com/api/element-summary/{elid}/",
+		"sanityCheckSize": 100,
+		"output": "player_{elid}.json"
         },
         {
-			"uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-			"sanityCheckSize": 100,
-			"output": "overall_standings_page_{page}.json",
-			"pageStart": 1,
-			"pageIncrement": 1,
-			"pageCount": 20,
-			"extractCollection": [
-				{ "name": "entryid",  "path": "$.standings.results[*].entry" }
-			]
+		"uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
+		"sanityCheckSize": 100,
+		"output": "overall_standings_page_{page}.json",
+		"pageStart": 1,
+		"pageIncrement": 1,
+		"pageCount": 20,
+		"extractCollection": [
+			{ "name": "entryid",  "path": "$.standings.results[*].entry" }
+		]
         },
         {
-			"uri": "https://fantasy.premierleague.com/api/entry/{entryid}/history/",
-			"sanityCheckSize": 100,
+		"uri": "https://fantasy.premierleague.com/api/entry/{entryid}/history/",
+		"sanityCheckSize": 100,
 	        "output": "entry_{entryid}_history.json"
         },
         {
-			"uri": "https://fantasy.premierleague.com/api/entry/{entryid}/transfers/",
-			"sanityCheckSize": 100,
-			"output": "entry_{entryid}_transfers.json"
+		"uri": "https://fantasy.premierleague.com/api/entry/{entryid}/transfers/",
+		"sanityCheckSize": 100,
+		"output": "entry_{entryid}_transfers.json"
         },
         {
-			"uri": "https://fantasy.premierleague.com/api/entry/{entryid}/event/{gw}/picks/",
-			"sanityCheckSize": 100,
-			"output": "entry_{entryid}_picks_{gw}.json"
+		"uri": "https://fantasy.premierleague.com/api/entry/{entryid}/event/{gw}/picks/",
+		"sanityCheckSize": 100,
+		"output": "entry_{entryid}_picks_{gw}.json"
         }
     ]
 }

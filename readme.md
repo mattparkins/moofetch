@@ -18,7 +18,7 @@ Moofetch does everything through its config file.  Generate the config file usin
 
 Here's a walkthrough the example config which uses fantasy premier league (FPL) as its data source.
 
-```
+```json
 {
     "dataPath": "data/",
     "callRatePerMin": 0,

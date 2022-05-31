@@ -19,7 +19,7 @@ namespace moofetch {
         }
 
 
-        static readonly int _versionMajor = 0, _versionMinor = 1;
+        static readonly int _versionMajor = 1, _versionMinor = 0;
 
 
         static void _displayVersion() {

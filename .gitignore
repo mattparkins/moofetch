@@ -210,4 +210,6 @@ project.lock.json
 *.Specs_*.html
 config.json
 
+# Project specific ignores
 data
+arc

@@ -28,77 +28,11 @@
       "output": "overall_standings_page_{page}.json",
       "pageStart": 1,
       "pageIncrement": 1,
-      "pageCount": 200,
-      "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].entry" }
-      ]
-    },
-    {
-      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-      "sanityCheckSize": 100,
-      "output": "overall_standings_page_{page}.json",
-      "pageStart": 500,
-      "pageIncrement": 1,
       "pageCount": 20,
       "extractCollection": [
         { "name": "entryid",  "path": "$.standings.results[*].entry" }
       ]
     },
-    {
-      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-      "sanityCheckSize": 100,
-      "output": "overall_standings_page_{page}.json",
-      "pageStart": 1000,
-      "pageIncrement": 1,
-      "pageCount": 20,
-      "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].entry" }
-      ]
-    },
-    {
-      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-      "sanityCheckSize": 100,
-      "output": "overall_standings_page_{page}.json",
-      "pageStart": 2000,
-      "pageIncrement": 1,
-      "pageCount": 20,
-      "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].entry" }
-      ]
-    },
-    {
-      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-      "sanityCheckSize": 100,
-      "output": "overall_standings_page_{page}.json",
-      "pageStart": 5000,
-      "pageIncrement": 1,
-      "pageCount": 20,
-      "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].entry" }
-      ]
-    },
-    {
-      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-      "sanityCheckSize": 100,
-      "output": "overall_standings_page_{page}.json",
-      "pageStart": 10000,
-      "pageIncrement": 1,
-      "pageCount": 20,
-      "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].entry" }
-      ]
-    },
-    {
-      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
-      "sanityCheckSize": 100,
-      "output": "overall_standings_page_{page}.json",
-      "pageStart": 20000,
-      "pageIncrement": 1,
-      "pageCount": 20,
-      "extractCollection": [
-        { "name": "entryid",  "path": "$.standings.results[*].entry" }
-      ]
-    },  
     {
       "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/history/",
       "sanityCheckSize": 100,

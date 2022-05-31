@@ -2,7 +2,7 @@
 
 Moofetch is a downloaded-data driven file fetcher.  Its primary strength is downloading json files, building data collections from entries in that downloaded json file, and then using the data collection to drive further downloads making it exceptionally powerful.
 
-For instance, Moofetch could download the first (say) 4 pages of a leaderboard json file for a fantasy football competition, extract an id from each entry in the leaderboard using JSONPath, and then download each manager's team using the extracted id.  
+For instance, Moofetch could download the first (say) 4 pages of a leaderboard json file for a fantasy football competition, extract an id from each entry in the leaderboard using JSONPath, and then download the team from each manager in those first 4 pages of the leaderboard using the extracted id.  
 
 - Can continue from where it left off if interrupted;
 - Has basic sanity checks on downloads;

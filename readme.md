@@ -79,7 +79,7 @@ Here's a walkthrough the example config which uses fantasy premier league (FPL) 
 
 **items**, array - contains an array of objects that describe download tasks.  Each task has the following settings, only the uri is required:
 
-**uri**, string, required, the target to download.  It can include references in curly brackets which will be substituted for a value.  The value can either be a collection name previously extracted (see collection extraction further down), or a reserved reference (presently the only one is 'page' - see paging further down).  If a collection contains more than one value, the uri will be downloaded multiple times with the reference substituted for each value.  If more than one reference is used then all combinations will be called.  For example, as seen with the final task above, a uri containing two references, one with 100 entries and the second with 38 entries, will be called 3800 times.
+**uri**, string, required, the target to download.  It can include references in curly brackets (case-sensitive) which will be substituted for a value.  The value can either be a collection name previously extracted (see collection extraction further down), or a reserved reference (presently the only one is 'page' - see paging further down).  If a collection contains more than one value, the uri will be downloaded multiple times with the reference substituted for each value.  If more than one reference is used then all combinations will be called.  For example, as seen with the final task above, a uri containing two references, one with 100 entries and the second with 38 entries, will be called 3800 times.
 
 **sanityCheckSize**, int - the minimum received file size for this file to be considered a valid file.
 

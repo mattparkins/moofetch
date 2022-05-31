@@ -1,4 +1,10 @@
-﻿using System;
+﻿// Moofetch - downloaded json driven downloader
+// The program class controls the overarching task to be executed by the program,
+// whether showing help, the version number, generating a basic config file, or 
+// executing that config.
+// Async is used in preparation for asynchronous downloads.
+
+using System;
 using System.Threading.Tasks;
 
 namespace moofetch {

@@ -1,3 +1,7 @@
+// Engine.cs
+// The engine that drives the downloads.  Probably in need of refactoring now 
+// this is more than a simple side project to grab some data one time.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,6 +9,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+
 
 namespace moofetch {
     public static class Engine {

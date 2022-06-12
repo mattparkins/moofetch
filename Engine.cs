@@ -211,8 +211,25 @@ namespace moofetch {
                     //_coll[ec.name].ForEach(value => Console.WriteLine($"{ec.name} {value}"));
                 });
             }
-        }
 
+            // Is there any addToCollection directive?
+
+            if (item.addToCollection != null) {
+                Console.Write("AddToCollection:");
+                
+                item.addToCollection.ForEach(ac => {
+                    string name = ac.name.ToLower();
+                    Console.Write($"    {name}");
+                    if (_coll.ContainsKey(name)) {
+                        _coll[name].AddRange(ac.values);
+                        Console.Write($", {ac.values.Count} added");
+                    } else {
+                        Console.Write($" not found, skipping");
+                    }
+                });
+                Console.WriteLine(".");
+            }
+        }
 
 
         static async Task<string> _fetch(string uri, int minFileSize = 0, string outputFilename = null) {

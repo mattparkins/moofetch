@@ -12,6 +12,24 @@ namespace moofetch {
         }
     }
 
+    public class AddToCollection {
+        public string name  { get; set; }
+        public List<string> values  { get; set; }
+
+        // Basic sanity checking
+        public bool IsValid() {
+
+            if (name?.Length > 0 && values?.Count > 0) {
+                
+                bool isValid = true;
+                values.ForEach(v => isValid &= v?.Length > 0);
+                return isValid;
+            }
+
+            return false;
+        }
+    }
+
     public class FetchItem {
         public string uri                                   { get; set; } = "";
         public string output                                { get; set; }
@@ -21,6 +39,7 @@ namespace moofetch {
         public int pageCount                                { get; set; } = 1;
         public List<FetchItem> loopedItems                  { get; set; }
         public List<ExtractCollection> extractCollection    { get; set; }
+        public List<AddToCollection> addToCollection        { get; set; }
 
         // Basic sanity checking
         public bool IsValid() {
@@ -32,6 +51,10 @@ namespace moofetch {
 
             if (extractCollection != null) {
                 extractCollection.ForEach(ec => listsValid &= ec.IsValid());
+            }
+
+            if (addToCollection != null) {
+                addToCollection.ForEach(ac => listsValid &= ac.IsValid());
             }
 
             return (uri?.Length > 0 && listsValid);

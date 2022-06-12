@@ -31,6 +31,13 @@
       "pageCount": 20,
       "extractCollection": [
         { "name": "entryid",  "path": "$.standings.results[*].entry" }
+      ],
+      "addToCollection": [
+        {
+          "name": "entryid", "values": [
+            "13484", "28146", "101545", "1857827", "562569", "2720319", "19347", "2661635", "765095", "3806194"
+          ]
+        }
       ]
     },
     {

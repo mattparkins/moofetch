@@ -1,0 +1,26 @@
+{
+  "dataPath": "data/",
+  "skipFetch": false,
+  "callRatePerMin": 0,
+  "items": [
+    {
+      "uri": "https://fantasy.premierleague.com/api/bootstrap-static/",
+      "sanityCheckSize": 100000,
+      "output": "bootstrap-static.json",
+      "extractCollection": [
+        { "name": "gw", "path": "$.events[*].id" },
+        { "name": "elid", "path": "$.elements[*].id" }
+      ]
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/fixtures/?event={gw}",
+      "sanityCheckSize": 100,
+      "output": "fixtures_event_{gw}.json"
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/element-summary/{elid}/",
+      "sanityCheckSize": 100,
+      "output": "player_{elid}.json"
+    }
+  ]
+}

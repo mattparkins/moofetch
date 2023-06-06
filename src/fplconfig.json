@@ -1,0 +1,59 @@
+{
+  "dataPath": "../data/",
+  "skipFetch": false,
+  "callRatePerMin": 0,
+  "items": [
+    { 
+      "uri": "https://fantasy.premierleague.com/api/bootstrap-static/",
+      "sanityCheckSize": 100000,
+      "output": "bootstrap-static.json",
+      "extractCollection": [
+        { "name": "gw",   "path": "$.events[*].id"    },
+        { "name": "elid", "path": "$.elements[*].id"  }
+      ]
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/fixtures/?event={gw}",
+      "sanityCheckSize": 100,
+      "output": "fixtures_event_{gw}.json"
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/element-summary/{elid}/",
+      "sanityCheckSize": 100,
+      "output": "player_{elid}.json"
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/leagues-classic/314/standings/?page_standings={page}&phase=1",
+      "sanityCheckSize": 100,
+      "output": "overall_standings_page_{page}.json",
+      "pageStart": 1,
+      "pageIncrement": 1,
+      "pageCount": 2000,
+      "extractCollection": [
+        { "name": "entryid",  "path": "$.standings.results[*].entry" }
+      ],
+      "addToCollection": [
+        {
+          "name": "entryid", "values": [
+            "370", "40070", "175221", "2491", "4386863"
+          ]
+        }
+      ]
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/history/",
+      "sanityCheckSize": 100,
+      "output": "entry_{entryid}_history.json"
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/transfers/",
+      "sanityCheckSize": 100,
+      "output": "entry_{entryid}_transfers.json"
+    },
+    {
+      "uri": "https://fantasy.premierleague.com/api/entry/{entryid}/event/{gw}/picks/",
+      "sanityCheckSize": 100,
+      "output": "entry_{entryid}_picks_{gw}.json"
+    }
+  ]
+}

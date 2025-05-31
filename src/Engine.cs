@@ -22,15 +22,18 @@ namespace moofetch {
         static List<string> _reservedIdentifiers = new List<string> {"page", "TaskOutputIndex"};
         static DateTime _nextFetchStamp = DateTime.MinValue;
         static HttpClient _client = new HttpClient();
+        static Int32 _fetchCalls = 0;
 
-        public static async Task Execute(Config config) {
+        public static async Task Execute(Config config)
+        {
 
             _coll = new Dictionary<string, List<string>>();
             _config = config;
 
             // Create data folder if it doesn't already exist
 
-            if (!Directory.Exists(config.dataPath)) {
+            if (!Directory.Exists(config.dataPath))
+            {
                 Console.WriteLine($"Data folder ({config.dataPath}) does not exist, creating.");
                 Directory.CreateDirectory(config.dataPath);
             }
@@ -39,8 +42,9 @@ namespace moofetch {
 
             // Execute each fetch task in order
 
-            for (int i = 0; i < config.items.Count; i++) {
-                Console.WriteLine($"\nTask {i +1}/{config.items.Count}> Executing, source uri {config.items[i].uri}");
+            for (int i = 0; i < config.items.Count; i++)
+            {
+                Console.WriteLine($"\nTask {i + 1}/{config.items.Count}> Executing, source uri {config.items[i].uri}");
                 await _executeTask(i);
             }
         }
@@ -234,11 +238,14 @@ namespace moofetch {
 
         static async Task<string> _fetch(string uri, int minFileSize = 0, string outputFilename = null, string taskString = "") {
 
+            // increment the fetch call count
+            _fetchCalls++;
+
             // Convert uri to a filename
             string filename = _config.dataPath + (outputFilename == null ? Utils.SanitizeFilename(uri) +".json" : outputFilename);
             string json = "";
 
-            string cons = $"{taskString} {uri}, ";
+            string cons = $"{taskString} (fc# {_fetchCalls.ToString("N0")}) {uri}, ";
 
 
             // If the file exists, and isn't past its expiry then we can try loading a deserialising it
